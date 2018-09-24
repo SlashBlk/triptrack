@@ -1,0 +1,64 @@
+name: triptrack
+description: A road trip app.
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cloud_firestore: "^0.7.3"
+  firebase_core: "^0.2.4"
+  firebase_auth: "^0.5.11"
+  google_sign_in: "^3.0.4"
+  firebase_storage: "^0.3.7"
+  camera: "^0.2.1"
+  image_picker: "^0.4.4"
+  path_provider: "^0.4.1"
+  simple_permissions: "^0.1.5"
+  archive: "^2.0.0"
+  cached_network_image: "^0.4.1"
+  firebase_messaging: "^1.0.3"
+  flutter_staggered_grid_view:
+  cupertino_icons: ^0.1.2
+  flutter_facebook_login: "^1.1.1"
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+# For information on the generic Dart part of this file, see the
+# following page: https://www.dartlang.org/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/logo.png
+    - assets/mainBackground.gif
+    - assets/mainBackground.jpg
+    - assets/icons/googleIcon.png
+    - assets/icons/facebookIcon.png
+    - assets/icons/comeFinger.png
+    - assets/icons/friends.png
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.io/assets-and-images/#resolution-aware.
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.io/assets-and-images/#from-packages
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  fonts:
+     - family: BaiSau
+       fonts:
+         - asset: assets/fonts/UVNBaiSau.TTF
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.io/custom-fonts/#from-packages

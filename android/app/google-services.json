@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "116302139649",
+    "firebase_url": "https://roadtrip-8e75f.firebaseio.com",
+    "project_id": "roadtrip-8e75f",
+    "storage_bucket": "roadtrip-8e75f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:116302139649:android:ac0e8cb937e3a26f",
+        "android_client_info": {
+          "package_name": "com.example.triptrack"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "116302139649-d5toeoje4l9d13vkr4cokbqubph822tc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDChucaehZtbNDL6CqS7REALouWTgChZDU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
