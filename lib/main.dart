@@ -7,14 +7,15 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:triptrack/login.dart';
 
 Future<void> main() async {
-  final FirebaseApp app = await FirebaseApp.configure(
-    name: 'test',
-    options: const FirebaseOptions(
-      googleAppID: '1:116302139649:android:ac0e8cb937e3a26f',
-      apiKey: 'AIzaSyD4BUzFoovcYTTiBlcCBar_Dn2FnIP3Kes',
-      projectID: 'roadtrip-8e75f',
-    ),
-  );
+  // final FirebaseApp app = await FirebaseApp.configure(
+  //   name: 'test',
+  //   options: const FirebaseOptions(
+  //     googleAppID: '1:116302139649:android:ac0e8cb937e3a26f',
+  //     apiKey: 'AIzaSyD4BUzFoovcYTTiBlcCBar_Dn2FnIP3Kes',
+  //     projectID: 'roadtrip-8e75f',
+  //   ),
+  // );
+  final FirebaseApp app = FirebaseApp.instance;
   final FirebaseStorage storage = new FirebaseStorage(
       app: app, storageBucket: 'gs://roadtrip-8e75f.appspot.com');
   final Firestore db = new Firestore(app: app);
@@ -35,10 +36,7 @@ class App extends StatelessWidget {
       accentColor: Color(0xff66B032),
       backgroundColor: Color(0xff9BD770),
       canvasColor: Colors.white,
-      inputDecorationTheme: new InputDecorationTheme(
-        
-        
-      ),
+      inputDecorationTheme: new InputDecorationTheme(),
       accentIconTheme: new IconThemeData(
         color: Colors.white,
       ),
@@ -62,7 +60,7 @@ class App extends StatelessWidget {
         ),
         title: TextStyle(color: Colors.white),
         subhead: TextStyle(color: Colors.black),
-        body2:  TextStyle(color: Colors.white),
+        body2: TextStyle(color: Colors.white),
       ),
     );
     ThemeData orangeWhite = new ThemeData(
@@ -72,7 +70,7 @@ class App extends StatelessWidget {
       canvasColor: Color(0xffFEEEDC),
       backgroundColor: Color(0xffFFEBDC),
       dialogBackgroundColor: Color(0xffFFEBDC),
-       primaryTextTheme: TextTheme(
+      primaryTextTheme: TextTheme(
         title: TextStyle(color: Color(0xff1B3409), fontSize: 24.0),
         display1: TextStyle(fontSize: 28.0),
         body1: TextStyle(
