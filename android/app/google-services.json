@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "116302139649-vpdqcnqedbqf7buu01ko10ui4l7tfvcr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.triptrack",
+            "certificate_hash": "fd1f8338565e7b660ad94275912cd9ce2b9c2203"
+          }
+        },
+        {
+          "client_id": "116302139649-f6gkcpnoh2iapl7jeiggsn08o1t2sh97.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.triptrack",
+            "certificate_hash": "f7d94b2edc3b8cfdc686dd0fd86b834884b779df"
+          }
+        },
+        {
           "client_id": "116302139649-d5toeoje4l9d13vkr4cokbqubph822tc.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +45,20 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "116302139649-d5toeoje4l9d13vkr4cokbqubph822tc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "116302139649-vuamn1dhm69dil7eh7grvnicg651fhfv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.triptrack"
+              }
+            }
+          ]
         },
         "ads_service": {
           "status": 2

@@ -98,8 +98,6 @@ class _TripListState extends State<TripList> {
   }
   @override
   Widget build(BuildContext context) {
-    widget.currentUserRef =
-        widget.db.collection("users").document(widget.userId);
     widget.body = Column(
         mainAxisSize: MainAxisSize.min,
         verticalDirection: VerticalDirection.down,
@@ -111,8 +109,8 @@ class _TripListState extends State<TripList> {
             ClipPath(
               clipper: TripCardClipper(),
               child: StreamBuilder(
-                stream: widget.currentUserRef
-                    .collection('trips')
+                stream: widget.db
+                    .collection('users/'+widget.currentUser.uid+'/trips')
                     .orderBy('startDate')
                     .snapshots(),
                 builder: (BuildContext context,
@@ -156,11 +154,16 @@ class _TripListState extends State<TripList> {
                             });
                           });
                         },
-                        onTap: () {
+                        onTap: () async{
+                          var tripPageDocument = await widget.db.document("trips/"+tripDocument.documentID).get();
                           Navigator.push(
                               context,
-                              Utility.customPageRouteBuilder(new TripPage(widget.db, tripDocument,
-                                      widget.currentUser, widget.storage)));
+                              Utility.customPageRouteBuilder(new TripPage(
+                                tripDocument: tripPageDocument,
+                                currentUser: widget.currentUser,
+                                db: widget.db,
+                                storage: widget.storage,
+                              )));
                         },
                         child: new Card(
                           child: new Hero(

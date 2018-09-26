@@ -99,7 +99,7 @@ class _MainPageState extends State<MainPage> {
           Navigator.push(context,
               new MaterialPageRoute(builder: (BuildContext context) {
             return new NewTripPage(
-                currentUserRef: widget.currentUserRef,
+                currentUser: widget.currentUser,
                 db: widget.db,
                 storage: widget.storage);
           }));

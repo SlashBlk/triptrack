@@ -11,9 +11,8 @@ import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
 class LoginPage extends StatefulWidget {
   Firestore db;
-
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   int dem;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = new GoogleSignIn();
   TextEditingController idController;
   TextEditingController passController;

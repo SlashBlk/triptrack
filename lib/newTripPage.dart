@@ -10,11 +10,11 @@ import 'package:image_picker/image_picker.dart';
 class NewTripPage extends StatefulWidget {
   FirebaseStorage storage;
   Firestore db;
-  DocumentReference currentUserRef;
+  FirebaseUser currentUser;
   NewTripPage(
       {@required this.storage,
       @required this.db,
-      @required this.currentUserRef});
+      @required this.currentUser});
 
   @override
   NewTripPageState createState() {
@@ -31,7 +31,7 @@ class NewTripPageState extends State<NewTripPage> {
   Widget build(BuildContext context) {
     imageUploader = imageUploader == null
         ? new ImageUploader(
-            currentUserRef: widget.currentUserRef,
+            currentUser: widget.currentUser,
             storage: widget.storage,
           )
         : imageUploader;
@@ -122,7 +122,7 @@ class NewTripPageState extends State<NewTripPage> {
                         ),
                         onPressed: () async {
                           await addNewTrip();
-
+                          Navigator.pop(context);
                           //print(result);
                         },
                       ),
@@ -149,21 +149,17 @@ class NewTripPageState extends State<NewTripPage> {
     //     "mainImageUrl": imageUploader.imageUrl,
     //   });
     // });
-    var newTrip = await widget.db.collection("/trips").add({
+    var trip ={
       "name": tripNameController.text,
       "startDate": startDateController.text,
       "mainImageUrl": imageUploader.imageUrl,
-    });
-    widget.db.collection(widget.currentUserRef.path + "/trips").add({
-      "id": newTrip.documentID,
-      "name": tripNameController.text,
-      "startDate": startDateController.text,
-      "mainImageUrl": imageUploader.imageUrl,
-    });
+    };
+    var newTrip = await widget.db.collection("/trips").add(trip);
+    widget.db.collection("users/"+widget.currentUser.uid + "/trips").document(newTrip.documentID).setData(trip);
 
     //lookup
     widget.db.collection("/tripUser").document(newTrip.documentID).setData({
-      widget.currentUserRef.documentID: true,
+      widget.currentUser.uid: true,
     });
   }
 }
@@ -171,8 +167,8 @@ class NewTripPageState extends State<NewTripPage> {
 class ImageUploader extends StatefulWidget {
   String imageUrl = "";
   FirebaseStorage storage;
-  DocumentReference currentUserRef;
-  ImageUploader({this.currentUserRef, this.storage});
+  FirebaseUser currentUser;
+  ImageUploader({this.currentUser, this.storage});
   @override
   _ImageUploaderState createState() => new _ImageUploaderState();
 }
@@ -184,7 +180,7 @@ class _ImageUploaderState extends State<ImageUploader> {
       final StorageReference ref = widget.storage
           .ref()
           .child('images')
-          .child(widget.currentUserRef.documentID)
+          .child(widget.currentUser.uid)
           .child((new DateTime.now().toString() + '.jpg'));
       final StorageUploadTask uploadTask = ref.putFile(
         image,

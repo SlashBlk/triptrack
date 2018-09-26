@@ -19,13 +19,12 @@ class TripPage extends StatefulWidget {
   Widget header;
   FirebaseUser currentUser;
   TripPageHeader tripPageHeader;
-  TripPage(Firestore db, DocumentSnapshot tripDocument,
-      FirebaseUser currentUser, FirebaseStorage storage) {
-    this.db = db;
-    this.tripDocument = tripDocument;
-    this.currentUser = currentUser;
-    this.storage = storage;
-  }
+  TripPage({
+    @required this.currentUser,
+    @required this.db,
+    @required this.tripDocument,
+    @required this.storage,
+  });
 
   @override
   State<StatefulWidget> createState() {
@@ -183,7 +182,7 @@ class TripPageState extends State<TripPage> {
             right: 16.0,
             child: FloatingActionButton(
               child: Icon(Icons.person_add),
-              onPressed: () {
+              onPressed: () async {
                 Navigator.push(
                     context,
                     Utility.customPageRouteBuilder(new AddFriendToTripPage(
@@ -354,18 +353,15 @@ class TripPageHeaderState extends State<TripPageHeader> {
                 style: Theme.of(context).textTheme.title,
               ),
               new Text(
-                DateTime
-                        .parse(widget.document["startDate"].toString())
+                DateTime.parse(widget.document["startDate"].toString())
                         .day
                         .toString() +
                     "/" +
-                    DateTime
-                        .parse(widget.document["startDate"].toString())
+                    DateTime.parse(widget.document["startDate"].toString())
                         .month
                         .toString() +
                     "/" +
-                    DateTime
-                        .parse(widget.document["startDate"].toString())
+                    DateTime.parse(widget.document["startDate"].toString())
                         .year
                         .toString(),
                 style: Theme.of(context).textTheme.body2,
