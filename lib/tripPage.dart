@@ -42,7 +42,9 @@ class TripPageState extends State<TripPage> {
   Widget build(BuildContext context) {
     ScrollController imagesController = new ScrollController();
     ScrollController destinationsController = new ScrollController();
-    ScrollController chatsController = new ScrollController();
+    ScrollController chatsController = new ScrollController(
+       initialScrollOffset: 0.0
+    );
     var controllers = [
       imagesController,
       destinationsController,
