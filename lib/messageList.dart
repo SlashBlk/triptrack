@@ -7,7 +7,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class MessageList extends StatelessWidget {
+class MessageList extends StatefulWidget {
   FirebaseStorage storage;
   DocumentSnapshot tripDocument;
   FirebaseUser currentUser;
@@ -26,41 +26,50 @@ class MessageList extends StatelessWidget {
     this.storage = storage;
   }
 
+  @override
+  MessageListState createState() {
+    return new MessageListState();
+  }
+}
+
+class MessageListState extends State<MessageList> {
   TextDirection getTextDirection(DocumentSnapshot document) {
-    if (document["uid"] == currentUser.uid)
+    if (document["uid"] == widget.currentUser.uid)
       return TextDirection.rtl;
     else
       return TextDirection.ltr;
   }
 
   CrossAxisAlignment getCrossAlignment(DocumentSnapshot document) {
-    if (document["uid"] == currentUser.uid)
+    if (document["uid"] == widget.currentUser.uid)
       return CrossAxisAlignment.end;
     else
       return CrossAxisAlignment.start;
   }
 
-  Future<void> addNewMessage(String text) async {
-    await db.collection(tripDocument.reference.path + "/messages").add(
+  void addNewMessage(String text) {
+    widget.db
+        .collection(widget.tripDocument.reference.path + "/messages")
+        .add(
       {
-        "sender": currentUser.displayName,
+        "sender": widget.currentUser.displayName,
         "content": text,
         "time": DateTime.now().toString(),
-        "uid": currentUser.uid,
-        "photoUrl": currentUser.photoUrl,
+        "uid": widget.currentUser.uid,
+        "photoUrl": widget.currentUser.photoUrl,
       },
     ).then((value) {
-      scrollController.animateTo(scrollController.position.maxScrollExtent,
-          curve: Curves.ease, duration: new Duration(milliseconds: 200));
+      widget.scrollController.animateTo(widget.scrollController.position.maxScrollExtent,
+          curve: Curves.ease, duration: new Duration(milliseconds: 300));
     });
   }
 
   Future<String> getImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
-    final StorageReference ref = storage
+    final StorageReference ref = widget.storage
         .ref()
         .child('images')
-        .child(currentUser.uid)
+        .child(widget.currentUser.uid)
         .child((new DateTime.now().toString() + '.jpg'));
     final StorageUploadTask uploadTask = ref.putFile(
       image,
@@ -72,6 +81,14 @@ class MessageList extends StatelessWidget {
 
     var url = (await uploadTask.future).downloadUrl;
     return url.toString();
+  }
+
+  @override
+  void initState() {
+    widget.db.collection(widget.tripDocument.reference.path+'/messages').snapshots().listen((onData){
+      widget.scrollController.animateTo(widget.scrollController.position.maxScrollExtent+100,curve: Curves.ease, duration: Duration(milliseconds: 300));
+    });
+    super.initState();
   }
 
   @override
@@ -98,20 +115,22 @@ class MessageList extends StatelessWidget {
     }
 
     Color getBackGroundColor(DocumentSnapshot document) {
-      if (document["uid"] == currentUser.uid)
+      if (document["uid"] == widget.currentUser.uid)
         return Theme.of(context).backgroundColor;
       else
         return Color.fromRGBO(0, 0, 0, 0.05);
     }
 
     TextEditingController textEditingController = new TextEditingController();
+
     return new Column(
       children: <Widget>[
         new Container(
           child: new Expanded(
             child: new StreamBuilder(
-              stream: db
-                  .collection(this.tripDocument.reference.path + "/messages")
+              stream: widget.db
+                  .collection(
+                      this.widget.tripDocument.reference.path + "/messages")
                   .orderBy("time")
                   .snapshots(),
               builder: (BuildContext context,
@@ -119,7 +138,7 @@ class MessageList extends StatelessWidget {
                 if (!snapshot.hasData) return new Text('Loading...');
                 ListView listView = new ListView(
                   padding: new EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-                  controller: scrollController,
+                  controller: widget.scrollController,
                   scrollDirection: Axis.vertical,
                   children: snapshot.data.documents.map((document) {
                     return new Padding(
@@ -133,7 +152,7 @@ class MessageList extends StatelessWidget {
                           new Padding(
                             padding:
                                 const EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
-                            child: currentUser.uid != document["uid"]
+                            child: widget.currentUser.uid != document["uid"]
                                 ? new Container(
                                     decoration: new BoxDecoration(
                                       shape: BoxShape.circle,
